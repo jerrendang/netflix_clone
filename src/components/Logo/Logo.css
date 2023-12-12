@@ -1,0 +1,12 @@
+.logo{
+    color: #e50914;
+    font-size: 1.6em;
+
+    line-height: 1;
+    font-family: 'nf-icon';
+}
+
+.logo::before{
+    content: "\e5d0";
+    display: relative;
+}

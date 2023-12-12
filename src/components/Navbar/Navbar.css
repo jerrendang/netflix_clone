@@ -1,0 +1,7 @@
+.mainNav{
+    transition: background-color .3s;
+}
+
+.secondaryNav > *{
+    padding-inline-start: 30px;
+}

@@ -1,0 +1,39 @@
+.preview{
+    animation-name: fadeIn;
+    animation-duration: .8s;
+    animation-iteration-count: 1;
+    animation-direction: normal;
+    /* text-shadow: 10px 7px 10px black; */
+}
+
+.preview > * {
+    margin-top: 15px;
+}
+
+.previewImageWrapper::before{
+    content: '';
+    background: linear-gradient(to top, #141414, rgba(20,20,20,.8) ,transparent);
+    z-index: 1;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+}
+
+.infoButton{
+    background: rgba(109, 109, 109, 0.7);
+}
+
+.infoButton:hover{
+    background: rgba(109, 109, 109, 0.3);
+}
+
+@keyframes fadeIn{
+    from {
+        transform: translateY(10px);
+        opacity : 0;
+    }
+    to {
+        transform: translateY(0px);
+        opacity: 1
+    }
+}

@@ -1,0 +1,6 @@
+- row slider
+- info page
+- footer
+- navbar links
+- content theme pages
+- ...more

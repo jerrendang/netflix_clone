@@ -1,0 +1,12 @@
+li:hover{
+    color: #b5b5b5;
+    cursor: pointer;
+}
+
+li{
+    transition: color .4s;
+    text-wrap: nowrap;
+
+    font-size: .9em;
+    padding-inline-start: 20px;
+}

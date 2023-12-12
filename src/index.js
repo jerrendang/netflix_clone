@@ -2,16 +2,32 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
-import reportWebVitals from './reportWebVitals';
+import { useEffect } from 'react';
+import { CookiesProvider, useCookies } from 'react-cookie'
+
+import Welcome from './components/Welcome';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
+
+const Content = () => {
+  const [cookies, setCookie] = useCookies(['visited'])
+
+  return (
+    <CookiesProvider >
+      {
+        cookies.visited ? (
+          <App />
+        ) : (
+          <Welcome setCookie={setCookie}/>
+        )
+      }
+      <script src="https://kit.fontawesome.com/a4ec5f52e4.js" crossOrigin="anonymous"></script>
+    </CookiesProvider >
+  )
+}
+
 root.render(
   <React.StrictMode>
-    <App />
+    <Content />
   </React.StrictMode>
 );
-
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();

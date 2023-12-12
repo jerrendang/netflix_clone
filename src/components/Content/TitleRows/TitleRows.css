@@ -1,0 +1,4 @@
+.titleRows{
+    transform: translateY(-28vh);
+    z-index: 4;
+}

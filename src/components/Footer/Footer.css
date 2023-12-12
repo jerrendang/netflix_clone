@@ -1,0 +1,8 @@
+.icons > svg:hover path{
+    /* fill: #b5b5b5; */
+    fill: red;
+}
+
+path{
+    transition: fill .4s;
+}
