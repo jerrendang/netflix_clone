@@ -19,13 +19,7 @@ const Content = () => {
   return (
     <Provider store={store}> 
       <CookiesProvider >
-        {
-          cookies.visited ? (
-            <App />
-          ) : (
-            <Welcome setCookie={setCookie}/>
-          )
-        }
+        <App />
         <script src="https://kit.fontawesome.com/a4ec5f52e4.js" crossOrigin="anonymous"></script>
       </CookiesProvider >
     </Provider>

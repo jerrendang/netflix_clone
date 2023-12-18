@@ -37,22 +37,7 @@ const TitleRating = ({highlightedTitle}) => {
                     for (let i = 0; i < data.length; i += 1){
                         if (data[i].iso_3166_1 === 'US' || data[i].iso_3166_1 === 'KR'){
                             let tempRating = data[i].rating
-                            switch (tempRating){
-                                case 'R':
-                                    setRating('Rated R')
-                                    break;
-                                case '15':
-                                    setRating('Rated 15+');
-                                    break;
-                                case '18':
-                                    setRating('Rated 18+');
-                                    break;
-                                case '12':
-                                    setRating('Rated 12+');
-                                    break;
-                                default:
-                                    setRating(tempRating)
-                            }
+                            setRating('Rated ' + tempRating)
                         }
                     }
                 })
@@ -63,22 +48,7 @@ const TitleRating = ({highlightedTitle}) => {
                     for (let i = data.length - 1; i >= 0; i -= 1){
                         if (data[i].iso_3166_1 === 'US' || data[i].iso_3166_1 === 'KR'){
                             let tempRating = data[i].release_dates[0].certification;
-                            switch (tempRating) {
-                                case 'R':
-                                    setRating('Rated R')
-                                    break;
-                                case '15':
-                                    setRating('Rated 15+');
-                                    break;
-                                case '18':
-                                    setRating('Rated 18+');
-                                    break;
-                                case '12':
-                                    setRating('Rated 12+');
-                                    break;
-                                default:
-                                    setRating(tempRating)
-                            }
+                            setRating('Rated ' + tempRating);
                         }
                     }
                 })
