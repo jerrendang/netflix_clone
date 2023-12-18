@@ -2,7 +2,6 @@ import './Navbar.css';
 import Navigation from "../Navigation";
 import Logo from '../Logo';
 import Notifications from "../Notifications";
-import Searchbar from '../Searchbar';
 import Profile from '../Profile';
 
 import { useRef, useState, useEffect } from 'react';
@@ -28,16 +27,15 @@ const Navbar = () => {
     }, [])
 
     return (
-        <div className='mainNav w-screen pl-[4%] pr-[4%] h-[68px] fixed z-[100] bg-gradient-to-b from-black to-transparent flex flex-row justify-between items-center text-[1rem]'
+        <div className='mainNav w-screen min-w-[1400px] h-[68px] fixed z-[100] bg-gradient-to-b from-black to-transparent flex flex-row justify-between items-center text-[1rem]'
             ref={navRef}
         >
-            <div className='primaryNav flex items-center relative'>
+            <div className='primaryNav flex items-center relative pl-[4%]'>
                 <Logo />
-                <Navigation />
+                {/* <Navigation /> */}
             </div>
-            <div className='secondaryNav flex items-center'>
-                <Searchbar />
-                <Notifications />
+            <div className='secondaryNav flex items-center pr-[4%]'>
+                {/* <Notifications /> */}
                 <Profile />
             </div>
         </div>

@@ -7,8 +7,6 @@ const Navigation = () => {
             <li><a href='#home'>Home</a></li>
             <li><a href='#TV Shows'>TV Shows</a></li>
             <li><a href='#Movies'>Movies</a></li>
-            <li><a href='#New & Popular'>New & Popular</a></li>
-            <li><a href='#Browse by Languages'></a>Browse By Languages</li>
         </ul>
     )
 }

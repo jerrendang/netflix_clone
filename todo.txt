@@ -1,5 +1,9 @@
 - row slider
+    - slider buttons \/
+    - slider indicator \/
 - info page
+    - age rating ------------------
+
 - footer
 - navbar links
 - content theme pages

@@ -1,0 +1,31 @@
+.modalImageWrapper::before{
+    content: '';
+    background: linear-gradient(to top, #141414, transparent);
+    z-index: 1;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+}
+
+.descriptionTitle{
+    color: white;
+    opacity: .6;
+}
+
+.descriptor > *{
+    font-size: .8em;
+}
+
+.link:hover{
+    opacity: .5;
+}
+
+.closeButton{
+    background: rgba(110,110,110, .8);
+    z-index: 2;
+}
+
+.closeButton:hover{
+    cursor: pointer;
+    background: rgba(110,110,110,.5);
+}

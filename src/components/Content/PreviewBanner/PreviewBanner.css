@@ -25,6 +25,11 @@
 
 .infoButton:hover{
     background: rgba(109, 109, 109, 0.3);
+    cursor: pointer;
+}
+
+.modalBg{
+    transition: opacity .4s;
 }
 
 @keyframes fadeIn{

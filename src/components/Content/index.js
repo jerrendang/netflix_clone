@@ -6,6 +6,7 @@ import { useState, useEffect } from 'react';
 
 const Content = ({titleType = 'all'}) => {
     const trendingURL = `https://api.themoviedb.org/3/trending/${titleType}/day?language=en-US&include_video=true`;
+    const secondTrendingURL = `https://api.themoviedb.org/3/trending/${titleType}/day?language=en-US&include_video=true&page=2`;
 
     const tvGenreURL = 'https://api.themoviedb.org/3/genre/tv/list?language=en';
     const movieGenreURL = 'https://api.themoviedb.org/3/genre/movie/list?language=en';
@@ -13,7 +14,7 @@ const Content = ({titleType = 'all'}) => {
     const topMoviesURL = 'https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=1&sort_by=popularity.desc';
     const topTvURL = 'https://api.themoviedb.org/3/discover/tv?include_adult=false&include_null_first_air_dates=false&language=en-US&page=1&sort_by=popularity.desc';
     const newMoviesURL = 'https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=1&sort_by=primary_release_date.desc';
-    const newTvURL = 'https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=1&sort_by=primary_release_date.desc';
+    const newTvURL = 'https://api.themoviedb.org/3/discover/tv?include_adult=false&include_video=false&language=en-US&page=1&sort_by=primary_release_date.desc';
 
     const options = {
         method: 'GET',
@@ -29,26 +30,20 @@ const Content = ({titleType = 'all'}) => {
     const [genres, setGenres] = useState();
 
     const [trending, setTrending] = useState();
+
     const [topMovies, setTopMovies] = useState();
+
     const [topTv, setTopTv] = useState();
+
     const [newMovies, setNewMovies] = useState();
+
     const [newTv, setNewTv] = useState();
 
     const initialFetch = async () => {
         // fetching for preview
         await fetch(trendingURL, options)
             .then(res => res.json())
-            .then(data => setTrending(data.results))
-            .catch(err => console.log(err));
-
-        // fetching for genres
-        await fetch(movieGenreURL, options)
-            .then(res => res.json())
-            .then(data => setMoviesGenres(data.genres))
-            .catch(err => console.log(err));
-        await fetch(tvGenreURL, options)
-            .then(res => res.json())
-            .then(data => setTvGenres(data.genres))
+            .then(async data => setTrending(data.results))
             .catch(err => console.log(err));
 
         // fetching for rows
@@ -68,6 +63,16 @@ const Content = ({titleType = 'all'}) => {
             .then(res => res.json())
             .then(data => setNewTv(data.results))
             .catch(err => console.log(err));
+
+        // fetching for genres
+        await fetch(movieGenreURL, options)
+            .then(res => res.json())
+            .then(data => setMoviesGenres(data.genres))
+            .catch(err => console.log(err));
+        await fetch(tvGenreURL, options)
+            .then(res => res.json())
+            .then(data => setTvGenres(data.genres))
+            .catch(err => console.log(err));
     }
 
     const secondFetch = async () => {
@@ -80,17 +85,59 @@ const Content = ({titleType = 'all'}) => {
                 let tvURL = `https://api.themoviedb.org/3/discover/tv?include_adult=false&include_video=false&language=en-US&page=1&sort_by=popularity.desc&with_genres=${tvGenreID}`;
                 let movieURL = `https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=1&sort_by=popularity.desc&with_genres=${movieGenreID}`;
 
+                let secondTvURL = `https://api.themoviedb.org/3/discover/tv?include_adult=false&include_video=false&language=en-US&page=2&sort_by=popularity.desc&with_genres=${tvGenreID}`;
+                let secondMovieURL = `https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=2&sort_by=popularity.desc&with_genres=${movieGenreID}`;
+
+                let secondMovieData = await fetch(secondMovieURL, options)
+                    .then(res => res.json())
+                    .then(data => data.results)
+                    .catch(err => console.log(err))
+
+                let secondTvData = await fetch(secondTvURL, options)
+                    .then(res => res.json())
+                    .then(data => data.results)
+                    .catch(err => console.log(err))
+
                 await fetch(movieURL, options)
                     .then(res => res.json())
-                    .then(data => genreData[movieGenres[i].name + ' Movies'] = data.results)
+                    .then(data => {
+                        genreData[movieGenres[i].name + ' Movies'] = [...data.results, ...secondMovieData]
+                    })
                     .catch(err => console.log(err));
                 await fetch(tvURL, options)
                     .then(res => res.json())
-                    .then(data => genreData[tvGenres[i].name + ' TV Shows'] = data.results)
+                    .then(data => {
+                        genreData[tvGenres[i].name + ' TV Shows'] = [...data.results, ...secondTvData]
+                    })
                     .catch(err => console.log(err));;
             }
             setGenres(genreData);
+            thirdFetch();
         }
+    }
+
+    const thirdFetch = async () => {
+        await fetch(secondTrendingURL, options)
+            .then(res => res.json())
+            .then(data => {
+                setTrending([...trending, ...data.results])})
+            .catch(err => console.log(err));
+        await fetch(topMoviesURL + '&page=2', options)
+            .then(res => res.json())
+            .then(data => setTopMovies([...topMovies, ...data.results]))
+            .catch(err => console.log(err));
+        await fetch(topTvURL + '&page=2', options)
+            .then(res => res.json())
+            .then(data => setTopTv([...topTv, ...data.results]))
+            .catch(err => console.log(err));
+        await fetch(newMoviesURL + '&page=2', options)
+            .then(res => res.json())
+            .then(data => setNewMovies([...newMovies, ...data.results]))
+            .catch(err => console.log(err));
+        await fetch(newTvURL + '&page=2', options)
+            .then(res => res.json())
+            .then(data => setNewTv([...newTv, ...data.results]))
+            .catch(err => console.log(err));
     }
 
     useEffect(() => {
@@ -99,13 +146,12 @@ const Content = ({titleType = 'all'}) => {
 
     useEffect(() => {
         secondFetch();
-    }, [movieGenres, tvGenres])
+    }, [tvGenres])
 
-    return (
-        <div className=''>
-            {(trending && genres) && (
-                <div className='relative'>
-                    <PreviewBanner trending={trending}/>
+    if (trending && topMovies && topTv && newMovies && newTv && genres){
+        return (
+                <div className='relative min-w-[1400px]'>
+                    <PreviewBanner trending={trending} tvGenres={tvGenres} movieGenres={movieGenres}/>
                     <TitleRows 
                         trending={trending} 
                         topMovies={topMovies}
@@ -113,12 +159,15 @@ const Content = ({titleType = 'all'}) => {
                         newMovies={newMovies}
                         newTv={newTv}
                         genres={genres}
+                        tvGenres={tvGenres} 
+                        movieGenres={movieGenres}
                     />
                 </div>
-            )}
-            <div className={!trending ? 'block' : 'hidden'}>
-                <Loading />
-            </div>
+        )
+    }
+    return (
+        <div className=''>
+            <Loading />
         </div>
     )
 }
